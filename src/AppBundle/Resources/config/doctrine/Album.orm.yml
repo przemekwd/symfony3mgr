@@ -1,0 +1,65 @@
+AppBundle\Entity\Album:
+    type: entity
+    repositoryClass: AppBundle\Entity\AlbumRepository
+    table: album
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        title:
+            type: string
+            length: 100
+            nullable: false
+        description:
+            type: text
+            nullable: true
+        releaseDate:
+            name: release_date
+            type: datetime
+            nullable: false
+        recordYear:
+            name: record_year
+            type: integer
+            range:
+                min: 1900
+        created:
+            type: datetime
+    manyToOne:
+        artist:
+            targetEntity: Artist
+            joinColumn:
+                name: artist_id
+                referencedColumnName: id
+        distributor:
+            targetEntity: Distributor
+            joinColumn:
+                name: distributor_id
+                referencedColumnName: id
+    oneToMany:
+        tracks:
+            targetEntity: Track
+            mappedBy: album
+    manyToMany:
+        gentres:
+            targetEntity: Gentre
+            inversedBy: albums
+            joinTable:
+                name: album_gentre
+                joinColumns:
+                    album_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    gentre_id:
+                        referencedColumnName: id
+        mediums:
+            targetEntity: Medium
+            inversedBy: albums
+            joinTable:
+                name: album_medium
+                joinColumns:
+                    album_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    medium_id:
+                        referencedColumnName: id

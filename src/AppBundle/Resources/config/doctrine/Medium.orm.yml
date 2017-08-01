@@ -1,0 +1,17 @@
+AppBundle\Entity\Medium:
+    type: entity
+    repositoryClass: AppBundle\Entity\MediumRepository
+    table: medium
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        name:
+            type: string
+            length: 100
+            nullable: true
+    manyToMany:
+        albums:
+            targetEntity: Album
+            mappedBy: mediums

@@ -1,0 +1,31 @@
+AppBundle\Entity\Artist:
+    type: entity
+    repositoryClass: AppBundle\Entity\ArtistRepository
+    table: artist
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        name:
+            type: string
+            length: 100
+            nullable: true
+        firstname:
+            type: string
+            length: 100
+            nullable: true
+        lastname:
+            type: string
+            length: 100
+            nullable: true
+        birthDate:
+            name: birth_date
+            type: datetime
+        country:
+            type: string
+            length: 100
+    oneToMany:
+        albums:
+            targetEntity: Album
+            mappedBy: artist
