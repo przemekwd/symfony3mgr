@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Album</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ album.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ album.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ album.description }}</td>
+            </tr>
+            <tr>
+                <th>Releasedate</th>
+                <td>{% if album.releaseDate %}{{ album.releaseDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Recordyear</th>
+                <td>{{ album.recordYear }}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{% if album.created %}{{ album.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('album_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('album_edit', { 'id': album.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
