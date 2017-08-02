@@ -1,0 +1,5 @@
+menu:
+    home: 'Main page'
+    artists: 'Artists'
+    albums: 'Albums'
+    distributors: 'Distributors'
