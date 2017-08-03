@@ -98,9 +98,9 @@
     {% import _self as knp_menu %}
         <a href="{{ item.uri }}"{{ knp_menu.attributes(item.linkAttributes) }}>
             {%- if item.extras.icon is defined -%}
-                <i class="material-icons" style="color:#9d9d9d;">{{ item.extras.icon }}</i>
+                <i class="material-icons menu-icon" {%- if item.extras.user is defined -%}style="color:#9d9d9d"{%- endif -%}>{{ item.extras.icon }}</i>
             {%- endif -%}
-            {{ block('label') }}
+            <span class="menu-text" {%- if item.extras.user is defined -%}style="color:#9d9d9d"{%- endif -%}>{{ block('label') }}</span>
         </a>
 {% endblock %}
 

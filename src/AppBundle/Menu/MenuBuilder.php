@@ -29,13 +29,27 @@ class MenuBuilder
         $menu->addChild($this->translator->trans('menu.home', [], 'AppBundle'), [
             'route' => 'homepage',
             'extras' => [
-                'icon' => 'date_range',
+                'icon' => 'home',
             ],
         ]);
-        $menu->addChild($this->translator->trans('menu.albums', [], 'AppBundle'), ['route' => 'album_index']);
-        $menu->addChild($this->translator->trans('menu.artists', [], 'AppBundle'), ['route' => 'artist_index']);
-        $menu->addChild($this->translator->trans('menu.distributors', [], 'AppBundle'), ['route' => 'distributor_index'])
-            ->setAttribute('class', 'bold');
+        $menu->addChild($this->translator->trans('menu.albums', [], 'AppBundle'), [
+            'route' => 'album_index',
+            'extras' => [
+                'icon' => 'library_music',
+            ],
+        ]);
+        $menu->addChild($this->translator->trans('menu.artists', [], 'AppBundle'), [
+            'route' => 'artist_index',
+            'extras' => [
+                'icon' => 'face',
+            ],
+        ]);
+        $menu->addChild($this->translator->trans('menu.distributors', [], 'AppBundle'), [
+            'route' => 'distributor_index',
+            'extras' => [
+                'icon' => 'business',
+            ],
+        ])->setAttribute('class', 'bold');
 
         return $menu;
     }
@@ -48,12 +62,26 @@ class MenuBuilder
             ],
         ]);
 
-       /*if ($token = $this->tokenStorage->getToken()->getRoles()) {
-            $menu->addChild($this->tokenStorage->getToken()->getUsername(), ['route' => 'homepage']);
-            $menu->addChild($this->translator->trans('layout.logout', [], 'FOSUserBundle'), [
+        if ($token = $this->tokenStorage->getToken()->getRoles()) {
+            $menu->addChild($this->tokenStorage->getToken()->getUsername(), [
+                'uri' => '#',
+                'attributes' => [
+                    'class' => 'disabled',
+                    'title' => $this->translator->trans('layout.logged_in_as', ['%username%' => $this->tokenStorage->getToken()->getUsername()], 'FOSUserBundle'),
+                ],
+                'extras' => [
+                    'icon' => 'account_circle',
+                    'user' => true,
+                ],
+            ]);
+            $menu->addChild('', [
                 'uri' => '/logout',
                 'attributes' => [
-                    'class' => 'usermenu-last'
+                    'class' => 'usermenu-last',
+                    'title' => $this->translator->trans('layout.logout', [], 'FOSUserBundle'),
+                ],
+                'extras' => [
+                    'icon' => 'power_settings_new',
                 ],
             ]);
         } else {
@@ -64,7 +92,7 @@ class MenuBuilder
                     'class' => 'usermenu-last'
                 ],
             ]);
-        }*/
+        }
 
         return $menu;
     }

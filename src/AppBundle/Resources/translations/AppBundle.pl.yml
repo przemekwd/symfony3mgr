@@ -3,3 +3,20 @@ menu:
     artists: 'Artyści'
     albums: 'Albumy'
     distributors: 'Wydawcy'
+artist:
+    list: 'Lista artystów'
+    form:
+        name: 'Nazwa'
+        firstname: 'Imię'
+        lastname: 'Nazwisko'
+        birthdate_person: 'Data urodzenia'
+        birthdate_band: 'Data utworzenia'
+        country: 'Państwo'
+        actions: 'Akcje'
+buttons:
+    edit: 'Edytuj'
+    add: 'Dodaj'
+    show: 'Pokaż'
+    back: 'Powrót'
+    delete: 'Usuń'
+

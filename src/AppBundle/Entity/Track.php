@@ -110,4 +110,3 @@ class Track
         return $this->album;
     }
 }
-

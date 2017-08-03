@@ -352,4 +352,3 @@ class Album
         return $this->mediums;
     }
 }
-

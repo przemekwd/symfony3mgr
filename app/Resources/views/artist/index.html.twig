@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>
+        <i class="material-icons" style="font-size:48px;">recent_actors</i>
+        <span>{{ 'artist.list'|trans({}, 'AppBundle') }}</span>
+    </h1>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th></th>
+            <th>
+                {{ 'artist.form.name'|trans({}, 'AppBundle') }} / {{ 'artist.form.firstname'|trans({}, 'AppBundle') }} i {{ 'artist.form.lastname'|trans({}, 'AppBundle') }}
+            </th>
+            <th>
+                {{ 'artist.form.birthdate_person'|trans({}, 'AppBundle') }} / {{ 'artist.form.birthdate_band'|trans({}, 'AppBundle') }}
+            </th>
+            <th>{{ 'artist.form.country'|trans({}, 'AppBundle') }}</th>
+            <th>{{ 'artist.form.actions'|trans({}, 'AppBundle') }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for artist in artists %}
+            <tr>
+                <td>
+                    {% if artist.band %}
+                        <i class="material-icons">people_outline</i>
+                    {% else %}
+                        <i class="material-icons">person_outline</i>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if artist.name != null %}
+                        {{ artist.name }}
+                    {% else %}
+                        {{ artist.firstname }} {{ artist.lastname }}
+                    {% endif %}
+                    </td>
+                <td>
+                    {% if artist.band %}
+                        {{ artist.birthDate|date('Y') }}
+                    {% else %}
+                        {{ artist.birthDate|date('d-m-Y') }}
+                    {% endif %}
+                </td>
+                <td>{{ artist.country }}</td>
+                <td>
+                    <a href="{{ path('artist_show', { 'id': artist.id }) }}" class="btn btn-info" role="button">
+                        <span class="material-icons">info_outline</span>
+                        {{ 'buttons.show'|trans({}, 'AppBundle') }}
+                    </a>
+                    <a href="{{ path('artist_edit', { 'id': artist.id }) }}" class="btn btn-warning" role="button">
+                        <span class="material-icons">create</span>
+                        {{ 'buttons.edit'|trans({}, 'AppBundle') }}
+                    </a>
+                    <a href="{{ path('artist_delete', { 'id': artist.id }) }}" class="btn btn-danger" role="button">
+                        <span class="material-icons">highlight_off</span>
+                        {{ 'buttons.delete'|trans({}, 'AppBundle') }}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('homepage') }}" class="btn btn-default" role="button" aria-label="Left Align">
+        <span class="material-icons">undo</span>
+        {{ 'buttons.back'|trans({}, 'AppBundle') }}
+    </a>
+    <a href="{{ path('artist_new') }}" class="btn btn-success pull-right" role="button">
+        <span class="material-icons">add_circle_outline</span>
+        {{ 'buttons.add'|trans({}, 'AppBundle') }}
+    </a>
+{% endblock %}

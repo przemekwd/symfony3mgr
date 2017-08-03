@@ -21,10 +21,12 @@ AppBundle\Entity\Artist:
             nullable: true
         birthDate:
             name: birth_date
-            type: datetime
+            type: date
         country:
             type: string
             length: 100
+        band:
+            type: boolean
     oneToMany:
         albums:
             targetEntity: Album

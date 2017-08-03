@@ -2,21 +2,32 @@
 
 namespace AppBundle\Entity;
 
+use FOS\UserBundle\Model\User as BaseUser;
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * User
+ * @ORM\Entity
+ * @ORM\Table(name="user")
  */
-class User
+class User extends BaseUser
 {
     /**
-     * @var integer
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var boolean
      */
     private $gender;
 
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * Get id
@@ -52,4 +63,3 @@ class User
         return $this->gender;
     }
 }
-

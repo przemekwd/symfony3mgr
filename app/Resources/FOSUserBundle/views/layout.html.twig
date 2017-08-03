@@ -12,16 +12,14 @@
                   integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
             <link rel="stylesheet" href="{{ asset('css/index.css') }}" />
         {% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
     </head>
     <body>
-        <nav class="navbar navbar-inverse">
-            {{ knp_menu_render('main', {'template': 'menu/mainMenu.html.twig'}) }}
-
-            {{ knp_menu_render('user', {'template': 'menu/mainMenu.html.twig'}) }}
-        </nav>
+        <div class="logo"></div>
         <div class="container">
-            {% block body %}{% endblock %}
+            {% block content %}
+                {% block fos_user_content %}{% endblock %}
+            {% endblock %}
         </div>
         {% block javascripts %}
             <script src="http://code.jquery.com/jquery-3.2.1.js"

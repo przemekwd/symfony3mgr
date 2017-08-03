@@ -98,4 +98,3 @@ class Medium
         return $this->albums;
     }
 }
-

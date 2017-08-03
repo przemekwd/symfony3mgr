@@ -127,4 +127,3 @@ class Distributor
         return $this->albums;
     }
 }
-

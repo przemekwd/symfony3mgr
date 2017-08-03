@@ -38,6 +38,11 @@ class Artist
     private $country;
 
     /**
+     * @var boolean
+     */
+    private $band;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $albums;
@@ -213,5 +218,28 @@ class Artist
     {
         return $this->albums;
     }
-}
 
+    /**
+     * Set band
+     *
+     * @param boolean $band
+     *
+     * @return Artist
+     */
+    public function setBand($band)
+    {
+        $this->band = $band;
+
+        return $this;
+    }
+
+    /**
+     * Get band
+     *
+     * @return boolean
+     */
+    public function getBand()
+    {
+        return $this->band;
+    }
+}

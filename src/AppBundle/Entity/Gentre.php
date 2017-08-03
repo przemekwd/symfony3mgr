@@ -98,4 +98,3 @@ class Gentre
         return $this->albums;
     }
 }
-
