@@ -5,7 +5,9 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Artist;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Artist controller.
@@ -24,7 +26,7 @@ class ArtistController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $artists = $em->getRepository('AppBundle:Artist')->findAll();
+        $artists = $em->getRepository('AppBundle:Artist')->findAll([], ['name' => 'ASC', 'lastname' => 'ASC']);
 
         return $this->render('artist/index.html.twig', array(
             'artists' => $artists,
@@ -40,7 +42,14 @@ class ArtistController extends Controller
     public function newAction(Request $request)
     {
         $artist = new Artist();
-        $form = $this->createForm('AppBundle\Form\ArtistType', $artist);
+        $form = $this->createForm('AppBundle\Form\ArtistType', $artist)
+            ->add('submit', SubmitType::class, [
+                'label' => $this->get('translator')->trans('buttons.add', [], 'AppBundle'),
+                'attr' => [
+                    'class' => 'btn btn-success pull-right',
+                    'role' => 'button',
+                ]]);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -48,7 +57,7 @@ class ArtistController extends Controller
             $em->persist($artist);
             $em->flush();
 
-            return $this->redirectToRoute('artist_show', array('id' => $artist->getId()));
+            return $this->redirectToRoute('artist_index');
         }
 
         return $this->render('artist/new.html.twig', array(
@@ -65,7 +74,7 @@ class ArtistController extends Controller
      */
     public function showAction(Artist $artist)
     {
-        $deleteForm = $this->createDeleteForm($artist);
+        $deleteForm = $this->createDeleteForm($artist, 'danger');
 
         return $this->render('artist/show.html.twig', array(
             'artist' => $artist,
@@ -81,8 +90,14 @@ class ArtistController extends Controller
      */
     public function editAction(Request $request, Artist $artist)
     {
-        $deleteForm = $this->createDeleteForm($artist);
-        $editForm = $this->createForm('AppBundle\Form\ArtistType', $artist);
+        $deleteForm = $this->createDeleteForm($artist,'default');
+        $editForm = $this->createForm('AppBundle\Form\ArtistType', $artist)
+            ->add('submit', SubmitType::class, [
+                'label' => $this->get('translator')->trans('buttons.edit', [], 'AppBundle'),
+                'attr' => [
+                    'class' => 'btn btn-warning pull-right',
+                    'role' => 'button',
+                ]]);;
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -106,7 +121,7 @@ class ArtistController extends Controller
      */
     public function deleteAction(Request $request, Artist $artist)
     {
-        $form = $this->createDeleteForm($artist);
+        $form = $this->createDeleteForm($artist,'danger');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -122,14 +137,22 @@ class ArtistController extends Controller
      * Creates a form to delete a artist entity.
      *
      * @param Artist $artist The artist entity
+     * @param string $class Class for delete button
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Artist $artist)
+    private function createDeleteForm(Artist $artist, string $class)
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('artist_delete', array('id' => $artist->getId())))
             ->setMethod('DELETE')
+            ->add('submit', SubmitType::class, [
+                'label' => $this->get('translator')->trans('buttons.delete', [], 'AppBundle'),
+                'attr' => [
+                    'class' => 'btn btn-' . $class . ' pull-right',
+                    'role' => 'button',
+                ],
+            ])
             ->getForm()
         ;
     }

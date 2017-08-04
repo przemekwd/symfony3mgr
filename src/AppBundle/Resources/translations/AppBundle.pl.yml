@@ -5,14 +5,19 @@ menu:
     distributors: 'Wydawcy'
 artist:
     list: 'Lista artystów'
+    edit: 'Edycja artysty'
+    show: 'Informacje'
+    new: 'Nowy artysta'
     form:
         name: 'Nazwa'
         firstname: 'Imię'
         lastname: 'Nazwisko'
         birthdate_person: 'Data urodzenia'
         birthdate_band: 'Data utworzenia'
+        birthdate_person_band: 'Data urodzenia / Data utworzenia'
         country: 'Państwo'
         actions: 'Akcje'
+        band: 'Zespół'
 buttons:
     edit: 'Edytuj'
     add: 'Dodaj'

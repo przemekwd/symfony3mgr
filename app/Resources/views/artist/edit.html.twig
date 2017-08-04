@@ -1,21 +1,37 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Artist edit</h1>
+    <h1>
+        <i class="material-icons" style="font-size:38px;">account_box</i>
+        <span>{{ 'artist.edit'|trans({}, 'AppBundle') }}</span>
+    </h1>
 
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
     {{ form_end(edit_form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('artist_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    <div class="pull-right col-md-1">
+        {{ form_start(delete_form) }}
+        {{ form_end(delete_form) }}
+    </div>
+
+    <a href="{{ path('artist_index') }}" class="btn btn-default" role="button" aria-label="Left Align">
+        <span class="material-icons">undo</span>
+        {{ 'buttons.back'|trans({}, 'AppBundle') }}
+    </a>
+    {% block javascript %}
+        <script src="http://code.jquery.com/jquery-3.2.1.js"
+                integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function() {
+                $('.js-datepicker').datepicker({
+                    format: 'yyyy-mm-dd',
+                    todayHighlight: true,
+                    autoclose: true,
+                });
+            });
+        </script>
+    {% endblock %}
 {% endblock %}

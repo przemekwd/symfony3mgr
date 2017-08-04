@@ -16,13 +16,16 @@ AppBundle\Entity\Album:
             nullable: true
         releaseDate:
             name: release_date
-            type: datetime
+            type: date
             nullable: false
         recordYear:
             name: record_year
             type: integer
             range:
                 min: 1900
+        cover:
+            type: string
+            length: 100
         created:
             type: datetime
     manyToOne:

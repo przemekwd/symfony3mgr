@@ -47,15 +47,15 @@
                 <td>{{ artist.country }}</td>
                 <td>
                     <a href="{{ path('artist_show', { 'id': artist.id }) }}" class="btn btn-info" role="button">
-                        <span class="material-icons">info_outline</span>
+                        <i class="material-icons">info_outline</i>
                         {{ 'buttons.show'|trans({}, 'AppBundle') }}
                     </a>
                     <a href="{{ path('artist_edit', { 'id': artist.id }) }}" class="btn btn-warning" role="button">
-                        <span class="material-icons">create</span>
+                        <i class="material-icons">create</i>
                         {{ 'buttons.edit'|trans({}, 'AppBundle') }}
                     </a>
                     <a href="{{ path('artist_delete', { 'id': artist.id }) }}" class="btn btn-danger" role="button">
-                        <span class="material-icons">highlight_off</span>
+                        <i class="material-icons">highlight_off</i>
                         {{ 'buttons.delete'|trans({}, 'AppBundle') }}
                     </a>
                 </td>
@@ -65,11 +65,11 @@
     </table>
 
     <a href="{{ path('homepage') }}" class="btn btn-default" role="button" aria-label="Left Align">
-        <span class="material-icons">undo</span>
+        <i class="material-icons">undo</i>
         {{ 'buttons.back'|trans({}, 'AppBundle') }}
     </a>
     <a href="{{ path('artist_new') }}" class="btn btn-success pull-right" role="button">
-        <span class="material-icons">add_circle_outline</span>
+        <i class="material-icons">add_circle_outline</i>
         {{ 'buttons.add'|trans({}, 'AppBundle') }}
     </a>
 {% endblock %}

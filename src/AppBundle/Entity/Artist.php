@@ -242,4 +242,13 @@ class Artist
     {
         return $this->band;
     }
+
+    public function __toString()
+    {
+        if (!empty($this->name)) {
+            return $this->name;
+        } else {
+            return $this->firstname . ' ' . $this->lastname;
+        }
+    }
 }

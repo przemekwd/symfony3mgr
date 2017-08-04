@@ -15,15 +15,50 @@ class ArtistType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('firstname')
-            ->add('lastname')
-            ->add('birthDate', DateType::class, [
-                'widget' => 'choice',
-                'years' => range(1950,2020),
+            ->add('name', null, [
+                'attr' => [
+                    'class' => 'form-control mb-2',
+                ],
+                'label' => 'artist.form.name',
+                'translation_domain' => 'AppBundle',
             ])
-            ->add('country')
-            ->add('band');
+            ->add('firstname', null, [
+                'attr' => [
+                    'class' => 'form-control mb-2',
+                ],
+                'label' => 'artist.form.firstname',
+                'translation_domain' => 'AppBundle',
+            ])
+            ->add('lastname', null, [
+                'attr' => [
+                    'class' => 'form-control mb-2',
+                ],
+                'label' => 'artist.form.lastname',
+                'translation_domain' => 'AppBundle',
+            ])
+            ->add('birthDate', DateType::class, [
+                'widget' => 'single_text',
+                'html5' => false,
+                'attr' => [
+                    'class' => 'form-control mb-2 js-datepicker',
+                ],
+                'label' => 'artist.form.birthdate_person_band',
+                'translation_domain' => 'AppBundle',
+            ])
+            ->add('country', null, [
+                'attr' => [
+                    'class' => 'form-control mb-2',
+                ],
+                'label' => 'artist.form.country',
+                'translation_domain' => 'AppBundle',
+            ])
+            ->add('band', null, [
+                'attr' => [
+                    'class' => 'ml-2',
+                ],
+                'label' => 'artist.form.band',
+                'translation_domain' => 'AppBundle',
+            ]);
     }
     
     /**

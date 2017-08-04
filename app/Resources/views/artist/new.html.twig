@@ -1,16 +1,32 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Artist creation</h1>
+    <h1>
+        <i class="material-icons" style="font-size:38px;">account_box</i>
+        <span>{{ 'artist.new'|trans({}, 'AppBundle') }}</span>
+    </h1>
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <input type="submit" value="Create" />
     {{ form_end(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('artist_index') }}">Back to the list</a>
-        </li>
-    </ul>
+    <a href="{{ path('artist_index') }}" class="btn btn-default" role="button" aria-label="Left Align">
+        <i class="material-icons">undo</i>
+        {{ 'buttons.back'|trans({}, 'AppBundle') }}
+    </a>
+    {% block javascript %}
+        <script src="http://code.jquery.com/jquery-3.2.1.js"
+                integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function() {
+                $('.js-datepicker').datepicker({
+                    format: 'yyyy-mm-dd',
+                    todayHighlight: true,
+                    autoclose: true,
+                });
+            });
+        </script>
+    {% endblock %}
 {% endblock %}
