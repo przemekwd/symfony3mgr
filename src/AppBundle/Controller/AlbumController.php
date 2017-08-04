@@ -2,10 +2,16 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Service\AlbumCoverUploader;
+use DateTime;
+use Exception;
 use AppBundle\Entity\Album;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Album controller.
@@ -40,15 +46,25 @@ class AlbumController extends Controller
     public function newAction(Request $request)
     {
         $album = new Album();
-        $form = $this->createForm('AppBundle\Form\AlbumType', $album);
+        $form = $this->createForm('AppBundle\Form\AlbumType', $album)
+            ->add('submit', SubmitType::class, [
+                'label' => $this->get('translator')->trans('buttons.add', [], 'AppBundle'),
+                'attr' => [
+                    'class' => 'btn btn-success pull-right',
+                    'role' => 'button',
+            ]]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $coverUpload = $this->container->get(AlbumCoverUploader::class);
+            $album->setCover($coverUpload->upload($album->getCover()));
+            $album->setCreated(new DateTime('now'));
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($album);
             $em->flush();
 
-            return $this->redirectToRoute('album_show', array('id' => $album->getId()));
+            return $this->redirectToRoute('album_index');
         }
 
         return $this->render('album/new.html.twig', array(
@@ -65,7 +81,7 @@ class AlbumController extends Controller
      */
     public function showAction(Album $album)
     {
-        $deleteForm = $this->createDeleteForm($album);
+        $deleteForm = $this->createDeleteForm($album, 'danger');
 
         return $this->render('album/show.html.twig', array(
             'album' => $album,
@@ -81,14 +97,31 @@ class AlbumController extends Controller
      */
     public function editAction(Request $request, Album $album)
     {
-        $deleteForm = $this->createDeleteForm($album);
-        $editForm = $this->createForm('AppBundle\Form\AlbumType', $album);
+        try {
+            $album->setCover(
+                new File($this->getParameter('developer_logo_directory') . '/' . $album->getCover())
+            );
+        } catch (Exception $e) {
+            $album->setCover('');
+        }
+
+        $deleteForm = $this->createDeleteForm($album, 'default');
+        $editForm = $this->createForm('AppBundle\Form\AlbumType', $album)
+            ->add('submit', SubmitType::class, [
+                'label' => $this->get('translator')->trans('buttons.edit', [], 'AppBundle'),
+                'attr' => [
+                    'class' => 'btn btn-warning pull-right',
+                    'role' => 'button',
+                ]]);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $coverUpload = $this->container->get(AlbumCoverUploader::class);
+            $album->setCover($coverUpload->upload($album->getCover()));
+
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('album_edit', array('id' => $album->getId()));
+            return $this->redirectToRoute('album_index', array('id' => $album->getId()));
         }
 
         return $this->render('album/edit.html.twig', array(
@@ -106,7 +139,7 @@ class AlbumController extends Controller
      */
     public function deleteAction(Request $request, Album $album)
     {
-        $form = $this->createDeleteForm($album);
+        $form = $this->createDeleteForm($album, 'danger');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -122,14 +155,22 @@ class AlbumController extends Controller
      * Creates a form to delete a album entity.
      *
      * @param Album $album The album entity
+     * @param string $class Class for delete button
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Album $album)
+    private function createDeleteForm(Album $album, string $class)
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('album_delete', array('id' => $album->getId())))
             ->setMethod('DELETE')
+            ->add('submit', SubmitType::class, [
+                'label' => $this->get('translator')->trans('buttons.delete', [], 'AppBundle'),
+                'attr' => [
+                    'class' => 'btn btn-' . $class . ' pull-right',
+                    'role' => 'button',
+                ],
+            ])
             ->getForm()
         ;
     }

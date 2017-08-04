@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>
+        <i class="material-icons" style="font-size:38px;">audiotrack</i>
+        <span>{{ 'track.edit'|trans({}, 'AppBundle') }}</span>
+    </h1>
+
+    {{ form_start(edit_form) }}
+    {{ form_widget(edit_form) }}
+    {{ form_end(edit_form) }}
+
+    <a href="{{ path('album_show', {'id': track.album.id}) }}" class="btn btn-default" role="button" aria-label="Left Align">
+        <span class="material-icons">undo</span>
+        {{ 'buttons.back'|trans({}, 'AppBundle') }}
+    </a>
+{% endblock %}

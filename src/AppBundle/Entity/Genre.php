@@ -3,9 +3,9 @@
 namespace AppBundle\Entity;
 
 /**
- * Gentre
+ * Genre
  */
-class Gentre
+class Genre
 {
     /**
      * @var integer
@@ -15,7 +15,12 @@ class Gentre
     /**
      * @var string
      */
-    private $name;
+    private $name_pl;
+
+    /**
+     * @var string
+     */
+    private $name_en;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -41,27 +46,51 @@ class Gentre
     }
 
     /**
-     * Set name
+     * Set namePl
      *
-     * @param string $name
+     * @param string $namePl
      *
-     * @return Gentre
+     * @return Genre
      */
-    public function setName($name)
+    public function setNamePl($namePl)
     {
-        $this->name = $name;
+        $this->name_pl = $namePl;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get namePl
      *
      * @return string
      */
-    public function getName()
+    public function getNamePl()
     {
-        return $this->name;
+        return $this->name_pl;
+    }
+
+    /**
+     * Set nameEn
+     *
+     * @param string $nameEn
+     *
+     * @return Genre
+     */
+    public function setNameEn($nameEn)
+    {
+        $this->name_en = $nameEn;
+
+        return $this;
+    }
+
+    /**
+     * Get nameEn
+     *
+     * @return string
+     */
+    public function getNameEn()
+    {
+        return $this->name_en;
     }
 
     /**
@@ -69,7 +98,7 @@ class Gentre
      *
      * @param \AppBundle\Entity\Album $album
      *
-     * @return Gentre
+     * @return Genre
      */
     public function addAlbum(\AppBundle\Entity\Album $album)
     {
@@ -96,5 +125,10 @@ class Gentre
     public function getAlbums()
     {
         return $this->albums;
+    }
+
+    public function __toString()
+    {
+        return $this->name_pl;
     }
 }

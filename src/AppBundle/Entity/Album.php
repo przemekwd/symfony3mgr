@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Album
  */
@@ -55,7 +57,7 @@ class Album
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $gentres;
+    private $genres;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -63,13 +65,18 @@ class Album
     private $mediums;
 
     /**
+     * @var string
+     */
+    private $cover;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->tracks = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->gentres = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->mediums = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tracks = new ArrayCollection();
+        $this->genres = new ArrayCollection();
+        $this->mediums = new ArrayCollection();
     }
 
     /**
@@ -209,7 +216,7 @@ class Album
      *
      * @return Album
      */
-    public function addTrack(\AppBundle\Entity\Track $track)
+    public function addTrack(Track $track)
     {
         $this->tracks[] = $track;
 
@@ -221,7 +228,7 @@ class Album
      *
      * @param \AppBundle\Entity\Track $track
      */
-    public function removeTrack(\AppBundle\Entity\Track $track)
+    public function removeTrack(Track $track)
     {
         $this->tracks->removeElement($track);
     }
@@ -243,7 +250,7 @@ class Album
      *
      * @return Album
      */
-    public function setArtist(\AppBundle\Entity\Artist $artist = null)
+    public function setArtist(Artist $artist = null)
     {
         $this->artist = $artist;
 
@@ -267,7 +274,7 @@ class Album
      *
      * @return Album
      */
-    public function setDistributor(\AppBundle\Entity\Distributor $distributor = null)
+    public function setDistributor(Distributor $distributor = null)
     {
         $this->distributor = $distributor;
 
@@ -285,47 +292,13 @@ class Album
     }
 
     /**
-     * Add gentre
-     *
-     * @param \AppBundle\Entity\Gentre $gentre
-     *
-     * @return Album
-     */
-    public function addGentre(\AppBundle\Entity\Gentre $gentre)
-    {
-        $this->gentres[] = $gentre;
-
-        return $this;
-    }
-
-    /**
-     * Remove gentre
-     *
-     * @param \AppBundle\Entity\Gentre $gentre
-     */
-    public function removeGentre(\AppBundle\Entity\Gentre $gentre)
-    {
-        $this->gentres->removeElement($gentre);
-    }
-
-    /**
-     * Get gentres
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getGentres()
-    {
-        return $this->gentres;
-    }
-
-    /**
      * Add medium
      *
      * @param \AppBundle\Entity\Medium $medium
      *
      * @return Album
      */
-    public function addMedium(\AppBundle\Entity\Medium $medium)
+    public function addMedium(Medium $medium)
     {
         $this->mediums[] = $medium;
 
@@ -337,7 +310,7 @@ class Album
      *
      * @param \AppBundle\Entity\Medium $medium
      */
-    public function removeMedium(\AppBundle\Entity\Medium $medium)
+    public function removeMedium(Medium $medium)
     {
         $this->mediums->removeElement($medium);
     }
@@ -351,11 +324,6 @@ class Album
     {
         return $this->mediums;
     }
-    /**
-     * @var string
-     */
-    private $cover;
-
 
     /**
      * Set cover
@@ -380,4 +348,44 @@ class Album
     {
         return $this->cover;
     }
+
+    /**
+     * Add genre
+     *
+     * @param \AppBundle\Entity\Genre $genre
+     *
+     * @return Album
+     */
+    public function addGenre(Genre $genre)
+    {
+        $this->genres[] = $genre;
+
+        return $this;
+    }
+
+    /**
+     * Remove genre
+     *
+     * @param \AppBundle\Entity\Genre $genre
+     */
+    public function removeGenre(Genre $genre)
+    {
+        $this->genres->removeElement($genre);
+    }
+
+    /**
+     * Get genres
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGenres()
+    {
+        return $this->genres;
+    }
+
+    public function __toString()
+    {
+        return $this->title;
+    }
+
 }

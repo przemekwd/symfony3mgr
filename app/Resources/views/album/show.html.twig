@@ -1,48 +1,104 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Album</h1>
+    <h1>
+        <i class="material-icons" style="font-size:38px;">album</i>
+        <span>{{ album.title }}</span>
+    </h1>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ album.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ album.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ album.description }}</td>
-            </tr>
-            <tr>
-                <th>Releasedate</th>
-                <td>{% if album.releaseDate %}{{ album.releaseDate|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Recordyear</th>
-                <td>{{ album.recordYear }}</td>
-            </tr>
-            <tr>
-                <th>Created</th>
-                <td>{% if album.created %}{{ album.created|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3>
+                <i class="material-icons">help_outline</i>
+                {{ 'album.show'|trans({}, 'AppBundle') }}
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="inline pull-right">
+                <img class="img-thumbnail" src="{{ asset('uploads/album/cover/' ~ album.cover) }}" height="200" width="200"/>
+            </div>
+            <table class="table-condensed">
+                <tbody>
+                    <tr>
+                        <td class="strong">{{ 'album.form.artist'|trans({}, 'AppBundle') }}</td>
+                        <td><a href="{{ path('artist_show', { 'id': album.getArtist().id }) }}">{{ album.artist }}</a></td>
+                    </tr>
+                    <tr>
+                        <td class="strong">{{ 'album.form.description'|trans({}, 'AppBundle') }}</td>
+                        <td>{{ album.description }}</td>
+                    </tr>
+                    <tr>
+                        <td class="strong">{{ 'album.form.distributor'|trans({}, 'AppBundle') }}</td>
+                        <td>{{ album.distributor }}</td>
+                    </tr>
+                    <tr>
+                        <td class="strong">{{ 'album.form.release_date'|trans({}, 'AppBundle') }}</td>
+                        <td>{{ album.releaseDate|date('d-m-Y') }}</td>
+                    </tr>
+                    <tr>
+                        <td class="strong">{{ 'album.form.record_year'|trans({}, 'AppBundle') }}</td>
+                        <td>{{ album.recordYear }}</td>
+                    </tr>
+                    <tr>
+                        <td class="strong">{{ 'album.form.genres'|trans({}, 'AppBundle') }}</td>
+                        <td>
+                            {% for genre in album.genres.getValues() %}
+                                {{ genre }}{% if loop.length > loop.index %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="strong">{{ 'album.form.mediums'|trans({}, 'AppBundle') }}</td>
+                        <td>
+                            {% for medium in album.mediums.getValues() %}
+                                {{ medium }}{% if loop.length > loop.index %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="panel-heading">
+            <h3>
+                <i class="material-icons">audiotrack</i>
+                {{ 'track.list'|trans({}, 'AppBundle') }}
+                <a href="{{ path('track_new', { 'albumid': album.id }) }}" class="btn btn-success pull-right" role="button">
+                    <i class="material-icons" style="vertical-align:top;margin-top:1px;">add_circle_outline</i>
+                </a>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <tbody>
+                {% for track in album.getTracks() %}
+                    <tr>
+                        <td class="strong">{{ track.number }}</td>
+                        <td>{{ track.title }}</td>
+                        <td>
+                            <a href="{{ path('track_edit', { 'albumid': album.id, 'id': track.id }) }}" class="btn btn-warning" role="button">
+                                <i class="material-icons">create</i>
+                            </a>
+                            <a href="{{ path('track_delete', { 'albumid': album.id, 'id': track.id }) }}" class="btn btn-danger" role="button">
+                                <i class="material-icons">highlight_off</i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('album_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('album_edit', { 'id': album.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    <div class="pull-right col-md-1">
+        {{ form_start(delete_form) }}
+        {{ form_end(delete_form) }}
+    </div>
+    <a href="{{ path('album_edit', { 'id': album.id }) }}" class="btn btn-warning pull-right" role="button">
+        {{ 'buttons.edit'|trans({}, 'AppBundle') }}
+    </a>
+
+    <a href="{{ path('album_index') }}" class="btn btn-default" role="button" aria-label="Left Align">
+        <i class="material-icons">undo</i>
+        {{ 'buttons.back'|trans({}, 'AppBundle') }}
+    </a>
 {% endblock %}

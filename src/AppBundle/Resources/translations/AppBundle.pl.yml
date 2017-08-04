@@ -14,10 +14,42 @@ artist:
         lastname: 'Nazwisko'
         birthdate_person: 'Data urodzenia'
         birthdate_band: 'Data utworzenia'
-        birthdate_person_band: 'Data urodzenia / Data utworzenia'
+        birthdate_person_band: 'Data urodzenia / utworzenia'
         country: 'Państwo'
         actions: 'Akcje'
         band: 'Zespół'
+distributor:
+    list: 'Lista wydawców'
+    edit: 'Edycja wydawcy'
+    show: 'Informacje'
+    new: 'Nowy wydawca'
+    form:
+        name: 'Nazwa'
+        country: 'Państwo'
+        actions: 'Akcje'
+album:
+    list: 'Lista albumów'
+    edit: 'Edycja albumu'
+    show: 'Informacje'
+    new: 'Nowy album'
+    form:
+        title: 'Tytuł'
+        description: 'Opis'
+        release_date: 'Data wydania'
+        record_year: 'Rok nagrania'
+        artist: 'Artysta'
+        distributor: 'Wydawca'
+        genres: 'Gatunki'
+        mediums: 'Nośniki'
+        cover: 'Okładka'
+        actions: 'Akcje'
+track:
+    list: 'Lista utworów'
+    edit: 'Edycja utworu'
+    new: 'Nowy utwór'
+    form:
+        number: 'Numer'
+        name: 'Nazwa'
 buttons:
     edit: 'Edytuj'
     add: 'Dodaj'

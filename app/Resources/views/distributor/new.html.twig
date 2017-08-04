@@ -1,16 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Distributor creation</h1>
+    <h1>
+        <i class="material-icons" style="font-size:38px;">business</i>
+        <span>{{ 'distributor.new'|trans({}, 'AppBundle') }}</span>
+    </h1>
 
     {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+    {{ form_widget(form) }}
     {{ form_end(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('distributor_index') }}">Back to the list</a>
-        </li>
-    </ul>
+    <a href="{{ path('distributor_index') }}" class="btn btn-default" role="button" aria-label="Left Align">
+        <i class="material-icons">undo</i>
+        {{ 'buttons.back'|trans({}, 'AppBundle') }}
+    </a>
 {% endblock %}

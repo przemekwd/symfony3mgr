@@ -5,7 +5,9 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Distributor;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Distributor controller.
@@ -40,7 +42,13 @@ class DistributorController extends Controller
     public function newAction(Request $request)
     {
         $distributor = new Distributor();
-        $form = $this->createForm('AppBundle\Form\DistributorType', $distributor);
+        $form = $this->createForm('AppBundle\Form\DistributorType', $distributor)
+            ->add('submit', SubmitType::class, [
+                'label' => $this->get('translator')->trans('buttons.add', [], 'AppBundle'),
+                'attr' => [
+                    'class' => 'btn btn-success pull-right',
+                    'role' => 'button',
+                ]]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -48,7 +56,7 @@ class DistributorController extends Controller
             $em->persist($distributor);
             $em->flush();
 
-            return $this->redirectToRoute('distributor_show', array('id' => $distributor->getId()));
+            return $this->redirectToRoute('distributor_index');
         }
 
         return $this->render('distributor/new.html.twig', array(
@@ -65,7 +73,7 @@ class DistributorController extends Controller
      */
     public function showAction(Distributor $distributor)
     {
-        $deleteForm = $this->createDeleteForm($distributor);
+        $deleteForm = $this->createDeleteForm($distributor, 'danger');
 
         return $this->render('distributor/show.html.twig', array(
             'distributor' => $distributor,
@@ -81,8 +89,14 @@ class DistributorController extends Controller
      */
     public function editAction(Request $request, Distributor $distributor)
     {
-        $deleteForm = $this->createDeleteForm($distributor);
-        $editForm = $this->createForm('AppBundle\Form\DistributorType', $distributor);
+        $deleteForm = $this->createDeleteForm($distributor, 'default');
+        $editForm = $this->createForm('AppBundle\Form\DistributorType', $distributor)
+            ->add('submit', SubmitType::class, [
+                'label' => $this->get('translator')->trans('buttons.edit', [], 'AppBundle'),
+                'attr' => [
+                    'class' => 'btn btn-warning pull-right',
+                    'role' => 'button',
+                ]]);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -106,7 +120,7 @@ class DistributorController extends Controller
      */
     public function deleteAction(Request $request, Distributor $distributor)
     {
-        $form = $this->createDeleteForm($distributor);
+        $form = $this->createDeleteForm($distributor, 'danger');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -122,14 +136,22 @@ class DistributorController extends Controller
      * Creates a form to delete a distributor entity.
      *
      * @param Distributor $distributor The distributor entity
+     * @param string $class Class for delete button
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Distributor $distributor)
+    private function createDeleteForm(Distributor $distributor, string $class)
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('distributor_delete', array('id' => $distributor->getId())))
             ->setMethod('DELETE')
+            ->add('submit', SubmitType::class, [
+                'label' => $this->get('translator')->trans('buttons.delete', [], 'AppBundle'),
+                'attr' => [
+                    'class' => 'btn btn-' . $class . ' pull-right',
+                    'role' => 'button',
+                ],
+            ])
             ->getForm()
         ;
     }

@@ -1,17 +1,21 @@
-AppBundle\Entity\Gentre:
+AppBundle\Entity\Genre:
     type: entity
-    repositoryClass: AppBundle\Entity\GentreRepository
-    table: gentre
+    repositoryClass: AppBundle\Entity\GenreRepository
+    table: genre
     id:
         id:
             type: integer
             generator: { strategy: AUTO }
     fields:
-        name:
+        name_pl:
+            type: string
+            length: 100
+            nullable: true
+        name_en:
             type: string
             length: 100
             nullable: true
     manyToMany:
         albums:
             targetEntity: Album
-            mappedBy: gentres
+            mappedBy: genres

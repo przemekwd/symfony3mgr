@@ -35,13 +35,13 @@ class MenuBuilder
         $menu->addChild($this->translator->trans('menu.albums', [], 'AppBundle'), [
             'route' => 'album_index',
             'extras' => [
-                'icon' => 'library_music',
+                'icon' => 'album',
             ],
         ]);
         $menu->addChild($this->translator->trans('menu.artists', [], 'AppBundle'), [
             'route' => 'artist_index',
             'extras' => [
-                'icon' => 'face',
+                'icon' => 'account_box',
             ],
         ]);
         $menu->addChild($this->translator->trans('menu.distributors', [], 'AppBundle'), [

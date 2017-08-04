@@ -13,7 +13,21 @@ class TrackType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title')->add('number')->add('album');
+        $builder
+            ->add('number',null, [
+                'attr' => [
+                    'class' => 'form-control mb-2',
+                ],
+                'label' => 'track.form.number',
+                'translation_domain' => 'AppBundle',
+            ])
+            ->add('title',null, [
+                'attr' => [
+                    'class' => 'form-control mb-2',
+                ],
+                'label' => 'track.form.name',
+                'translation_domain' => 'AppBundle',
+            ]);
     }
     
     /**

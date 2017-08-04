@@ -126,4 +126,14 @@ class Distributor
     {
         return $this->albums;
     }
+
+    /**
+     * Get album name from object
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name;
+    }
 }

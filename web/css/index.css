@@ -3,7 +3,7 @@
 }
 
 .mb-2 {
-    margin-bottom: 10px;
+    margin-bottom: 10px !important;
 }
 
 .mb-3 {
@@ -159,4 +159,12 @@ h1 .material-icons {
 
 table tbody tr td {
     vertical-align: middle !important;
+}
+
+.panel-heading h3 {
+    margin: 10px;
+}
+
+.panel-heading h3 .material-icons {
+    vertical-align: top;
 }

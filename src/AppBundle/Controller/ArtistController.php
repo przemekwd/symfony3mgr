@@ -82,8 +82,14 @@ class ArtistController extends Controller
         ));
     }
 
+
     /**
      * Displays a form to edit an existing artist entity.
+     *
+     * @param Request $request
+     * @param Artist $artist
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @Route("/{id}/edit", name="artist_edit")
      * @Method({"GET", "POST"})
@@ -97,7 +103,7 @@ class ArtistController extends Controller
                 'attr' => [
                     'class' => 'btn btn-warning pull-right',
                     'role' => 'button',
-                ]]);;
+                ]]);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

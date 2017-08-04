@@ -1,41 +1,53 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Distributors list</h1>
+    <h1>
+        <i class="material-icons" style="font-size:48px;">location_city</i>
+        <span>{{ 'distributor.list'|trans({}, 'AppBundle') }}</span>
+    </h1>
 
-    <table>
+    <table class="table table-striped">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Country</th>
-                <th>Actions</th>
-            </tr>
+        <tr>
+            <th></th>
+            <th>
+                {{ 'distributor.form.name'|trans({}, 'AppBundle') }} / {{ 'artist.form.firstname'|trans({}, 'AppBundle') }} i {{ 'artist.form.lastname'|trans({}, 'AppBundle') }}
+            </th>
+            <th>{{ 'distributor.form.country'|trans({}, 'AppBundle') }}</th>
+            <th>{{ 'artist.form.actions'|trans({}, 'AppBundle') }}</th>
+        </tr>
         </thead>
         <tbody>
         {% for distributor in distributors %}
             <tr>
-                <td><a href="{{ path('distributor_show', { 'id': distributor.id }) }}">{{ distributor.id }}</a></td>
+                <td><i class="material-icons">domain</i></td>
                 <td>{{ distributor.name }}</td>
                 <td>{{ distributor.country }}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('distributor_show', { 'id': distributor.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('distributor_edit', { 'id': distributor.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                    <a href="{{ path('distributor_show', { 'id': distributor.id }) }}" class="btn btn-info" role="button">
+                        <i class="material-icons">info_outline</i>
+                        {{ 'buttons.show'|trans({}, 'AppBundle') }}
+                    </a>
+                    <a href="{{ path('distributor_edit', { 'id': distributor.id }) }}" class="btn btn-warning" role="button">
+                        <i class="material-icons">create</i>
+                        {{ 'buttons.edit'|trans({}, 'AppBundle') }}
+                    </a>
+                    <a href="{{ path('distributor_delete', { 'id': distributor.id }) }}" class="btn btn-danger" role="button">
+                        <i class="material-icons">highlight_off</i>
+                        {{ 'buttons.delete'|trans({}, 'AppBundle') }}
+                    </a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('distributor_new') }}">Create a new distributor</a>
-        </li>
-    </ul>
+    <a href="{{ path('homepage') }}" class="btn btn-default" role="button" aria-label="Left Align">
+        <i class="material-icons">undo</i>
+        {{ 'buttons.back'|trans({}, 'AppBundle') }}
+    </a>
+    <a href="{{ path('distributor_new') }}" class="btn btn-success pull-right" role="button">
+        <i class="material-icons">add_circle_outline</i>
+        {{ 'buttons.add'|trans({}, 'AppBundle') }}
+    </a>
 {% endblock %}

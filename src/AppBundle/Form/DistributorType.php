@@ -13,7 +13,21 @@ class DistributorType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name')->add('country');
+        $builder
+            ->add('name', null, [
+                'attr' => [
+                    'class' => 'form-control mb-2',
+                ],
+                'label' => 'distributor.form.name',
+                'translation_domain' => 'AppBundle',
+            ])
+            ->add('country', null, [
+                'attr' => [
+                    'class' => 'form-control mb-2',
+                ],
+                'label' => 'distributor.form.country',
+                'translation_domain' => 'AppBundle',
+            ]);
     }
     
     /**

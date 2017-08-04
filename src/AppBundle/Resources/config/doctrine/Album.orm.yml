@@ -20,9 +20,8 @@ AppBundle\Entity\Album:
             nullable: false
         recordYear:
             name: record_year
-            type: integer
-            range:
-                min: 1900
+            type: string
+            length: 4
         cover:
             type: string
             length: 100
@@ -41,19 +40,20 @@ AppBundle\Entity\Album:
                 referencedColumnName: id
     oneToMany:
         tracks:
+            orderBy: { 'number': 'ASC' }
             targetEntity: Track
             mappedBy: album
     manyToMany:
-        gentres:
-            targetEntity: Gentre
+        genres:
+            targetEntity: Genre
             inversedBy: albums
             joinTable:
-                name: album_gentre
+                name: album_genre
                 joinColumns:
                     album_id:
                         referencedColumnName: id
                 inverseJoinColumns:
-                    gentre_id:
+                    genre_id:
                         referencedColumnName: id
         mediums:
             targetEntity: Medium

@@ -3,35 +3,42 @@
 {% block body %}
     <h1>
         <i class="material-icons" style="font-size:38px;">account_box</i>
-        <span>{{ artist.name }}</span>
+        <span>
+            {% if artist.name != '' %}
+                {{ artist.name }}
+            {% else %}
+                {{ artist.firstname }} {{ artist.lastname }}
+            {% endif %}
+        </span>
     </h1>
 
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h3>{{ 'artist.show'|trans({}, 'AppBundle') }}</h3>
+            <h3>
+                {% if artist.band %}
+                    <i class="material-icons">people_outline</i>
+                {% else %}
+                    <i class="material-icons">person_outline</i>
+                {% endif %}
+                {{ 'artist.show'|trans({}, 'AppBundle') }}
+            </h3>
         </div>
         <div class="panel-body">
             <table class="table-condensed">
                 <tbody>
                     <tr>
-                        <td class="strong">{{ 'artist.form.name'|trans({}, 'AppBundle') }}</td>
-                        <td>{{ artist.name }}</td>
-                    </tr>
-                    <tr>
-                        <td class="strong">{{ 'artist.form.firstname'|trans({}, 'AppBundle') }} i {{  'artist.form.lastname'|trans({}, 'AppBundle') }}</td>
-                        <td>{{ artist.firstname }} {{ artist.lastname }}</td>
-                    </tr>
-                    <tr>
-                        <td class="strong">{{ 'artist.form.birthdare_person_band'|trans({}, 'AppBundle') }}</td>
-                        <td>{{ artist.birthDate }}</td>
+                        <td class="strong">{{ 'artist.form.birthdate_person_band'|trans({}, 'AppBundle') }}</td>
+                        <td>
+                            {% if artist.name != '' %}
+                                {{ artist.birthDate|date('Y') }}
+                            {% else %}
+                                {{ artist.birthDate|date('d-m-Y') }}
+                            {% endif %}
+                        </td>
                     </tr>
                     <tr>
                         <td class="strong">{{ 'artist.form.country'|trans({}, 'AppBundle') }}</td>
                         <td>{{ artist.country }}</td>
-                    </tr>
-                    <tr>
-                        <td class="strong">{{ 'game.form.developer'|trans({}, 'GamesBundle') }}</td>
-                        <td><a href="{{ path('developer_show', { 'id': game.getDeveloper().id }) }}">{{ game.developer }}</a></td>
                     </tr>
                 </tbody>
             </table>

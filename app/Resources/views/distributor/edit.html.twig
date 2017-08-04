@@ -1,21 +1,22 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Distributor edit</h1>
+    <h1>
+        <i class="material-icons" style="font-size:38px;">business</i>
+        <span>{{ 'distributor.edit'|trans({}, 'AppBundle') }}</span>
+    </h1>
 
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
     {{ form_end(edit_form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('distributor_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    <div class="pull-right col-md-1">
+        {{ form_start(delete_form) }}
+        {{ form_end(delete_form) }}
+    </div>
+
+    <a href="{{ path('distributor_index') }}" class="btn btn-default" role="button" aria-label="Left Align">
+        <span class="material-icons">undo</span>
+        {{ 'buttons.back'|trans({}, 'AppBundle') }}
+    </a>
 {% endblock %}

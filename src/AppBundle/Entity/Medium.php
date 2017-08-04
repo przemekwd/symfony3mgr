@@ -97,4 +97,9 @@ class Medium
     {
         return $this->albums;
     }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 }
