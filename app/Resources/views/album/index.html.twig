@@ -10,10 +10,34 @@
         <thead>
         <tr>
             <th></th>
-            <th>{{ 'album.form.title'|trans({}, 'AppBundle') }}</th>
-            <th>{{ 'album.form.release_date'|trans({}, 'AppBundle') }}</th>
-            <th>{{ 'album.form.artist'|trans({}, 'AppBundle') }}</th>
-            <th>{{ 'album.form.distributor'|trans({}, 'AppBundle') }}</th>
+            <th>
+                <form action="{{ path('album_index') }}">
+                    {{ 'album.form.title'|trans({}, 'AppBundle') }}
+                    <button class="btn btn-default filter" type="submit" name="filter" value="title ASC"><i class="material-icons" title="ASC">arrow_drop_up</i></button>
+                    <button class="btn btn-default filter" type="submit" name="filter" value="title DESC"><i class="material-icons" title="DESC">arrow_drop_down</i></button>
+                </form>
+            </th>
+            <th>
+                <form action="{{ path('album_index') }}">
+                    {{ 'album.form.release_date'|trans({}, 'AppBundle') }}
+                    <button class="btn btn-default filter" type="submit" name="filter" value="releaseDate ASC"><i class="material-icons" title="ASC">arrow_drop_up</i></button>
+                    <button class="btn btn-default filter" type="submit" name="filter" value="releaseDate DESC"><i class="material-icons" title="DESC">arrow_drop_down</i></button>
+                </form>
+            </th>
+            <th>
+                <form action="{{ path('album_index') }}">
+                    {{ 'album.form.artist'|trans({}, 'AppBundle') }}
+                    <button class="btn btn-default filter" type="submit" name="filter" value="artist ASC"><i class="material-icons" title="ASC">arrow_drop_up</i></button>
+                    <button class="btn btn-default filter" type="submit" name="filter" value="artist DESC"><i class="material-icons" title="DESC">arrow_drop_down</i></button>
+                </form>
+            </th>
+            <th>
+                <form action="{{ path('album_index') }}">
+                    {{ 'album.form.distributor'|trans({}, 'AppBundle') }}
+                    <button class="btn btn-default filter" type="submit" name="filter" value="distributor ASC"><i class="material-icons" title="ASC">arrow_drop_up</i></button>
+                    <button class="btn btn-default filter" type="submit" name="filter" value="distributor DESC"><i class="material-icons" title="DESC">arrow_drop_down</i></button>
+                </form>
+            </th>
             <th>{{ 'album.form.actions'|trans({}, 'AppBundle') }}</th>
         </tr>
         </thead>

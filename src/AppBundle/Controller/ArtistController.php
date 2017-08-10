@@ -19,14 +19,19 @@ class ArtistController extends Controller
     /**
      * Lists all artist entities.
      *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
      * @Route("/", name="artist_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $artists = $em->getRepository('AppBundle:Artist')->findAll([], ['name' => 'ASC', 'lastname' => 'ASC']);
+        $artists = $em->getRepository('AppBundle:Artist')
+            ->findAll($request->get('filter'));
 
         return $this->render('artist/index.html.twig', array(
             'artists' => $artists,
@@ -35,6 +40,10 @@ class ArtistController extends Controller
 
     /**
      * Creates a new artist entity.
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @Route("/new", name="artist_new")
      * @Method({"GET", "POST"})
@@ -68,6 +77,10 @@ class ArtistController extends Controller
 
     /**
      * Finds and displays a artist entity.
+     *
+     * @param Artist $artist
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      *
      * @Route("/{id}", name="artist_show")
      * @Method("GET")
@@ -121,6 +134,11 @@ class ArtistController extends Controller
 
     /**
      * Deletes a artist entity.
+     *
+     * @param Request $request
+     * @param Artist $artist
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @Route("/{id}", name="artist_delete")
      * @Method("DELETE")

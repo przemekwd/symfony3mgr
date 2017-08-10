@@ -23,14 +23,19 @@ class AlbumController extends Controller
     /**
      * Lists all album entities.
      *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
      * @Route("/", name="album_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $albums = $em->getRepository('AppBundle:Album')->findAll();
+        $albums = $em->getRepository('AppBundle:Album')
+            ->findAll($request->get('filter'));
 
         return $this->render('album/index.html.twig', array(
             'albums' => $albums,

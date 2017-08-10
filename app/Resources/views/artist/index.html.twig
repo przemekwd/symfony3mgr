@@ -11,13 +11,29 @@
         <tr>
             <th></th>
             <th>
-                {{ 'artist.form.name'|trans({}, 'AppBundle') }} / {{ 'artist.form.firstname'|trans({}, 'AppBundle') }} i {{ 'artist.form.lastname'|trans({}, 'AppBundle') }}
+                <form action="{{ path('artist_index') }}">
+                    {{ 'artist.form.name'|trans({}, 'AppBundle') }} / {{ 'artist.form.firstname'|trans({}, 'AppBundle') }} i {{ 'artist.form.lastname'|trans({}, 'AppBundle') }}
+                    <button class="btn btn-default filter" type="submit" name="filter" value="name ASC,lastname ASC"><i class="material-icons" title="ASC">arrow_drop_up</i></button>
+                    <button class="btn btn-default filter" type="submit" name="filter" value="name DESC,lastname DESC"><i class="material-icons" title="DESC">arrow_drop_down</i></button>
+                </form>
             </th>
             <th>
-                {{ 'artist.form.birthdate_person'|trans({}, 'AppBundle') }} / {{ 'artist.form.birthdate_band'|trans({}, 'AppBundle') }}
+                <form action="{{ path('artist_index') }}">
+                    {{ 'artist.form.birthdate_person'|trans({}, 'AppBundle') }} / {{ 'artist.form.birthdate_band'|trans({}, 'AppBundle') }}
+                    <button class="btn btn-default filter" type="submit" name="filter" value="birthDate ASC"><i class="material-icons" title="ASC">arrow_drop_up</i></button>
+                    <button class="btn btn-default filter" type="submit" name="filter" value="birthDate DESC"><i class="material-icons" title="DESC">arrow_drop_down</i></button>
+                </form>
             </th>
-            <th>{{ 'artist.form.country'|trans({}, 'AppBundle') }}</th>
-            <th>{{ 'artist.form.actions'|trans({}, 'AppBundle') }}</th>
+            <th>
+                <form action="{{ path('artist_index') }}">
+                    {{ 'artist.form.country'|trans({}, 'AppBundle') }}
+                    <button class="btn btn-default filter" type="submit" name="filter" value="country ASC"><i class="material-icons" title="ASC">arrow_drop_up</i></button>
+                    <button class="btn btn-default filter" type="submit" name="filter" value="country DESC"><i class="material-icons" title="DESC">arrow_drop_down</i></button>
+                </form>
+            </th>
+            <th>
+                {{ 'artist.form.actions'|trans({}, 'AppBundle') }}
+            </th>
         </tr>
         </thead>
         <tbody>

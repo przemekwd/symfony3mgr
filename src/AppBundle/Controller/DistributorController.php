@@ -19,14 +19,19 @@ class DistributorController extends Controller
     /**
      * Lists all distributor entities.
      *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
      * @Route("/", name="distributor_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $distributors = $em->getRepository('AppBundle:Distributor')->findAll();
+        $distributors = $em->getRepository('AppBundle:Distributor')
+            ->findAll($request->get('filter'));
 
         return $this->render('distributor/index.html.twig', array(
             'distributors' => $distributors,
@@ -35,6 +40,10 @@ class DistributorController extends Controller
 
     /**
      * Creates a new distributor entity.
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @Route("/new", name="distributor_new")
      * @Method({"GET", "POST"})
@@ -68,6 +77,10 @@ class DistributorController extends Controller
     /**
      * Finds and displays a distributor entity.
      *
+     * @param Distributor $distributor
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
      * @Route("/{id}", name="distributor_show")
      * @Method("GET")
      */
@@ -83,6 +96,11 @@ class DistributorController extends Controller
 
     /**
      * Displays a form to edit an existing distributor entity.
+     *
+     * @param Request $request
+     * @param Distributor $distributor
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @Route("/{id}/edit", name="distributor_edit")
      * @Method({"GET", "POST"})
@@ -114,6 +132,11 @@ class DistributorController extends Controller
 
     /**
      * Deletes a distributor entity.
+     *
+     * @param Request $request
+     * @param Distributor $distributor
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @Route("/{id}", name="distributor_delete")
      * @Method("DELETE")

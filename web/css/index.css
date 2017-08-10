@@ -168,3 +168,8 @@ table tbody tr td {
 .panel-heading h3 .material-icons {
     vertical-align: top;
 }
+
+button.filter {
+    padding: 0;
+
+}
