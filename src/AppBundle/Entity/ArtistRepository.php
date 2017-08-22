@@ -12,18 +12,35 @@ use Doctrine\ORM\EntityRepository;
  */
 class ArtistRepository extends EntityRepository
 {
-    public function findAll($filter = null)
+    public function findAll($filter = null, $search = '')
     {
+        $entityManager = $this->getEntityManager();
+        $queryBuilder = $entityManager
+            ->getRepository('AppBundle:Artist')
+            ->createQueryBuilder('a');
+
+        if ($search) {
+            $queryBuilder = $queryBuilder
+                ->where('a.firstname LIKE :criteria')
+                ->orWhere('a.lastname LIKE :criteria')
+                ->orWhere('a.name LIKE :criteria')
+                ->setParameter('criteria', '%' . $search . '%');
+        }
+
         if ($filter) {
             $filter = explode(',', $filter);
-            $fl = [];
             foreach ($filter as $f) {
                 $tmp = explode(' ', $f);
-                $fl[$tmp[0]] = $tmp[1];
+                $queryBuilder = $queryBuilder->orderBy('a.' . $tmp[0], $tmp[1]);
             }
-            return $this->findBy([], $fl);
         } else {
-            return $this->findBy([], ['name' => 'ASC', 'lastname' => 'ASC']);
+            $queryBuilder = $queryBuilder
+                ->orderBy('a.name','ASC')
+                ->orderBy('a.lastname','ASC');
         }
+
+        return $queryBuilder
+            ->getQuery()
+            ->getResult();
     }
 }

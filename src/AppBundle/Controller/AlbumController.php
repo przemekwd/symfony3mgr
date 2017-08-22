@@ -35,10 +35,11 @@ class AlbumController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $albums = $em->getRepository('AppBundle:Album')
-            ->findAll($request->get('filter'));
+            ->findAll($request->get('filter'), $request->get('search'));
 
         return $this->render('album/index.html.twig', array(
             'albums' => $albums,
+            'search' => $request->get('search'),
         ));
     }
 

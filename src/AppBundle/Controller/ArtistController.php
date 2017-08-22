@@ -31,10 +31,11 @@ class ArtistController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $artists = $em->getRepository('AppBundle:Artist')
-            ->findAll($request->get('filter'));
+            ->findAll($request->get('filter'), $request->get('search'));
 
         return $this->render('artist/index.html.twig', array(
             'artists' => $artists,
+            'search' => $request->get('search'),
         ));
     }
 

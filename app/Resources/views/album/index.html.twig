@@ -1,72 +1,74 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>
-        <i class="material-icons" style="font-size:48px;">library_music</i>
-        <span>{{ 'album.list'|trans({}, 'AppBundle') }}</span>
-    </h1>
 
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th></th>
-            <th>
-                <form action="{{ path('album_index') }}">
-                    {{ 'album.form.title'|trans({}, 'AppBundle') }}
-                    <button class="btn btn-default filter" type="submit" name="filter" value="title ASC"><i class="material-icons" title="ASC">arrow_drop_up</i></button>
-                    <button class="btn btn-default filter" type="submit" name="filter" value="title DESC"><i class="material-icons" title="DESC">arrow_drop_down</i></button>
-                </form>
-            </th>
-            <th>
-                <form action="{{ path('album_index') }}">
-                    {{ 'album.form.release_date'|trans({}, 'AppBundle') }}
-                    <button class="btn btn-default filter" type="submit" name="filter" value="releaseDate ASC"><i class="material-icons" title="ASC">arrow_drop_up</i></button>
-                    <button class="btn btn-default filter" type="submit" name="filter" value="releaseDate DESC"><i class="material-icons" title="DESC">arrow_drop_down</i></button>
-                </form>
-            </th>
-            <th>
-                <form action="{{ path('album_index') }}">
-                    {{ 'album.form.artist'|trans({}, 'AppBundle') }}
-                    <button class="btn btn-default filter" type="submit" name="filter" value="artist ASC"><i class="material-icons" title="ASC">arrow_drop_up</i></button>
-                    <button class="btn btn-default filter" type="submit" name="filter" value="artist DESC"><i class="material-icons" title="DESC">arrow_drop_down</i></button>
-                </form>
-            </th>
-            <th>
-                <form action="{{ path('album_index') }}">
-                    {{ 'album.form.distributor'|trans({}, 'AppBundle') }}
-                    <button class="btn btn-default filter" type="submit" name="filter" value="distributor ASC"><i class="material-icons" title="ASC">arrow_drop_up</i></button>
-                    <button class="btn btn-default filter" type="submit" name="filter" value="distributor DESC"><i class="material-icons" title="DESC">arrow_drop_down</i></button>
-                </form>
-            </th>
-            <th>{{ 'album.form.actions'|trans({}, 'AppBundle') }}</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for album in albums %}
-            <tr>
-                <td><img src="{{ asset('uploads/album/cover/' ~ album.cover) }}" class="img-thumbnail" width="50" height="50"/></td>
-                <td>{{ album.title }}</td>
-                <td>{{ album.releaseDate|date('d-m-Y') }}</td>
-                <td>{{ album.artist }}</td>
-                <td>{{ album.distributor }}</td>
-                <td>
-                    <a href="{{ path('album_show', { 'id': album.id }) }}" class="btn btn-info" role="button">
-                        <i class="material-icons">info_outline</i>
-                        {{ 'buttons.show'|trans({}, 'AppBundle') }}
-                    </a>
-                    <a href="{{ path('album_edit', { 'id': album.id }) }}" class="btn btn-warning" role="button">
-                        <i class="material-icons">create</i>
-                        {{ 'buttons.edit'|trans({}, 'AppBundle') }}
-                    </a>
-                    <a href="{{ path('album_delete', { 'id': album.id }) }}" class="btn btn-danger" role="button">
-                        <i class="material-icons">highlight_off</i>
-                        {{ 'buttons.delete'|trans({}, 'AppBundle') }}
-                    </a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <form action="{{ path('album_index') }}">
+        <h1>
+            <div class="pull-left">
+                <i class="material-icons" style="font-size:48px;">library_music</i>
+                <span>{{ 'album.list'|trans({}, 'AppBundle') }}</span>
+            </div>
+            <div class="pull-right form-inline" style="font-size: 30px;">
+                <input type="text" class="form-inline" name="search" value="{{ search }}"/>
+                <button class="btn form-inline btn-white">
+                    <i class="material-icons" style="font-size:48px;">pageview</i>
+                </button>
+            </div>
+        </h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>
+                        {{ 'album.form.title'|trans({}, 'AppBundle') }}
+                        <button class="btn btn-default filter" type="submit" name="filter" value="title ASC"><i class="material-icons" title="ASC">arrow_drop_up</i></button>
+                        <button class="btn btn-default filter" type="submit" name="filter" value="title DESC"><i class="material-icons" title="DESC">arrow_drop_down</i></button>
+                    </th>
+                    <th>
+                        {{ 'album.form.release_date'|trans({}, 'AppBundle') }}
+                        <button class="btn btn-default filter" type="submit" name="filter" value="releaseDate ASC"><i class="material-icons" title="ASC">arrow_drop_up</i></button>
+                        <button class="btn btn-default filter" type="submit" name="filter" value="releaseDate DESC"><i class="material-icons" title="DESC">arrow_drop_down</i></button>
+                    </th>
+                    <th>
+                        {{ 'album.form.artist'|trans({}, 'AppBundle') }}
+                        <button class="btn btn-default filter" type="submit" name="filter" value="artist ASC"><i class="material-icons" title="ASC">arrow_drop_up</i></button>
+                        <button class="btn btn-default filter" type="submit" name="filter" value="artist DESC"><i class="material-icons" title="DESC">arrow_drop_down</i></button>
+                    </th>
+                    <th>
+                        {{ 'album.form.distributor'|trans({}, 'AppBundle') }}
+                        <button class="btn btn-default filter" type="submit" name="filter" value="distributor ASC"><i class="material-icons" title="ASC">arrow_drop_up</i></button>
+                        <button class="btn btn-default filter" type="submit" name="filter" value="distributor DESC"><i class="material-icons" title="DESC">arrow_drop_down</i></button>
+                    </th>
+                    <th>{{ 'album.form.actions'|trans({}, 'AppBundle') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for album in albums %}
+                <tr>
+                    <td><img src="{{ asset('uploads/album/cover/' ~ album.cover) }}" class="img-thumbnail" width="50" height="50"/></td>
+                    <td>{{ album.title }}</td>
+                    <td>{{ album.releaseDate|date('d-m-Y') }}</td>
+                    <td>{{ album.artist }}</td>
+                    <td>{{ album.distributor }}</td>
+                    <td>
+                        <a href="{{ path('album_show', { 'id': album.id }) }}" class="btn btn-info" role="button">
+                            <i class="material-icons">info_outline</i>
+                            {{ 'buttons.show'|trans({}, 'AppBundle') }}
+                        </a>
+                        <a href="{{ path('album_edit', { 'id': album.id }) }}" class="btn btn-warning" role="button">
+                            <i class="material-icons">create</i>
+                            {{ 'buttons.edit'|trans({}, 'AppBundle') }}
+                        </a>
+                        <a href="{{ path('album_delete', { 'id': album.id }) }}" class="btn btn-danger" role="button">
+                            <i class="material-icons">highlight_off</i>
+                            {{ 'buttons.delete'|trans({}, 'AppBundle') }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </form>
 
     <a href="{{ path('homepage') }}" class="btn btn-default" role="button" aria-label="Left Align">
         <i class="material-icons">undo</i>

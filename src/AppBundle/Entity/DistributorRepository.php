@@ -12,18 +12,31 @@ use Doctrine\ORM\EntityRepository;
  */
 class DistributorRepository extends EntityRepository
 {
-    public function findAll($filter = null)
+    public function findAll($filter = null, $search = '')
     {
+        $entityManager = $this->getEntityManager();
+        $queryBuilder = $entityManager
+            ->getRepository('AppBundle:Distributor')
+            ->createQueryBuilder('d');
+
+        if ($search) {
+            $queryBuilder = $queryBuilder
+                ->where('d.name LIKE :criteria')
+                ->setParameter('criteria', '%' . $search . '%');
+        }
+
         if ($filter) {
             $filter = explode(',', $filter);
-            $fl = [];
             foreach ($filter as $f) {
                 $tmp = explode(' ', $f);
-                $fl[$tmp[0]] = $tmp[1];
+                $queryBuilder = $queryBuilder->orderBy('d.' . $tmp[0], $tmp[1]);
             }
-            return $this->findBy([], $fl);
         } else {
-            return $this->findBy([], ['name' => 'ASC']);
+            $queryBuilder = $queryBuilder->orderBy('d.name','ASC');
         }
+
+        return $queryBuilder
+            ->getQuery()
+            ->getResult();
     }
 }

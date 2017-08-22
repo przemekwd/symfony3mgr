@@ -12,18 +12,31 @@ use Doctrine\ORM\EntityRepository;
  */
 class AlbumRepository extends EntityRepository
 {
-    public function findAll($filter = null)
+    public function findAll($filter = null, $search = '')
     {
+        $entityManager = $this->getEntityManager();
+        $queryBuilder = $entityManager
+            ->getRepository('AppBundle:Album')
+            ->createQueryBuilder('a');
+
+        if ($search) {
+            $queryBuilder = $queryBuilder
+                ->where('a.title LIKE :criteria')
+                ->setParameter('criteria', '%' . $search . '%');
+        }
+
         if ($filter) {
             $filter = explode(',', $filter);
-            $fl = [];
             foreach ($filter as $f) {
                 $tmp = explode(' ', $f);
-                $fl[$tmp[0]] = $tmp[1];
+                $queryBuilder = $queryBuilder->orderBy('a.' . $tmp[0], $tmp[1]);
             }
-            return $this->findBy([], $fl);
         } else {
-            return $this->findBy([], ['title' => 'ASC']);
+            $queryBuilder = $queryBuilder->orderBy('a.title','ASC');
         }
+
+        return $queryBuilder
+            ->getQuery()
+            ->getResult();
     }
 }

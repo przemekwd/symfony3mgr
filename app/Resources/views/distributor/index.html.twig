@@ -1,58 +1,61 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>
-        <i class="material-icons" style="font-size:48px;">location_city</i>
-        <span>{{ 'distributor.list'|trans({}, 'AppBundle') }}</span>
-    </h1>
-
-    <table class="table table-striped">
-        <thead>
-
-            <tr>
-                <th></th>
-                <th>
-                    <form action="{{ path('distributor_index') }}">
+    <form action="{{ path('distributor_index') }}">
+        <h1>
+            <div class="pull-left">
+                <i class="material-icons" style="font-size:48px;">location_city</i>
+                <span>{{ 'distributor.list'|trans({}, 'AppBundle') }}</span>
+            </div>
+            <div class="pull-right form-inline" style="font-size: 30px;">
+                <input type="text" class="form-inline" name="search" value="{{ search }}"/>
+                <button class="btn form-inline btn-white">
+                    <i class="material-icons" style="font-size:48px;">pageview</i>
+                </button>
+            </div>
+        </h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>
                         {{ 'distributor.form.name'|trans({}, 'AppBundle') }}
                         <button class="btn btn-default filter" type="submit" name="filter" value="name ASC"><i class="material-icons" title="ASC">arrow_drop_up</i></button>
                         <button class="btn btn-default filter" type="submit" name="filter" value="name DESC"><i class="material-icons" title="DESC">arrow_drop_down</i></button>
-                    </form>
-                </th>
-                <th>
-                    <form action="{{ path('distributor_index') }}">
+                    </th>
+                    <th>
                         {{ 'distributor.form.country'|trans({}, 'AppBundle') }}
                         <button class="btn btn-default filter" type="submit" name="filter" value="country ASC"><i class="material-icons" title="ASC">arrow_drop_up</i></button>
                         <button class="btn btn-default filter" type="submit" name="filter" value="country DESC"><i class="material-icons" title="DESC">arrow_drop_down</i></button>
-                    </form>
-                </th>
-                <th>{{ 'artist.form.actions'|trans({}, 'AppBundle') }}</th>
-            </tr>
-
-        </thead>
-        <tbody>
-        {% for distributor in distributors %}
-            <tr>
-                <td><i class="material-icons">domain</i></td>
-                <td>{{ distributor.name }}</td>
-                <td>{{ distributor.country }}</td>
-                <td>
-                    <a href="{{ path('distributor_show', { 'id': distributor.id }) }}" class="btn btn-info" role="button">
-                        <i class="material-icons">info_outline</i>
-                        {{ 'buttons.show'|trans({}, 'AppBundle') }}
-                    </a>
-                    <a href="{{ path('distributor_edit', { 'id': distributor.id }) }}" class="btn btn-warning" role="button">
-                        <i class="material-icons">create</i>
-                        {{ 'buttons.edit'|trans({}, 'AppBundle') }}
-                    </a>
-                    <a href="{{ path('distributor_delete', { 'id': distributor.id }) }}" class="btn btn-danger" role="button">
-                        <i class="material-icons">highlight_off</i>
-                        {{ 'buttons.delete'|trans({}, 'AppBundle') }}
-                    </a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                    </th>
+                    <th>{{ 'artist.form.actions'|trans({}, 'AppBundle') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for distributor in distributors %}
+                <tr>
+                    <td><i class="material-icons">domain</i></td>
+                    <td>{{ distributor.name }}</td>
+                    <td>{{ distributor.country }}</td>
+                    <td>
+                        <a href="{{ path('distributor_show', { 'id': distributor.id }) }}" class="btn btn-info" role="button">
+                            <i class="material-icons">info_outline</i>
+                            {{ 'buttons.show'|trans({}, 'AppBundle') }}
+                        </a>
+                        <a href="{{ path('distributor_edit', { 'id': distributor.id }) }}" class="btn btn-warning" role="button">
+                            <i class="material-icons">create</i>
+                            {{ 'buttons.edit'|trans({}, 'AppBundle') }}
+                        </a>
+                        <a href="{{ path('distributor_delete', { 'id': distributor.id }) }}" class="btn btn-danger" role="button">
+                            <i class="material-icons">highlight_off</i>
+                            {{ 'buttons.delete'|trans({}, 'AppBundle') }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </form>
 
     <a href="{{ path('homepage') }}" class="btn btn-default" role="button" aria-label="Left Align">
         <i class="material-icons">undo</i>

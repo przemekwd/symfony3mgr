@@ -31,10 +31,11 @@ class DistributorController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $distributors = $em->getRepository('AppBundle:Distributor')
-            ->findAll($request->get('filter'));
+            ->findAll($request->get('filter'), $request->get('search'));
 
         return $this->render('distributor/index.html.twig', array(
             'distributors' => $distributors,
+            'search' => $request->get('search'),
         ));
     }
 

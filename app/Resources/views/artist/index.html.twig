@@ -1,84 +1,87 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>
-        <i class="material-icons" style="font-size:48px;">recent_actors</i>
-        <span>{{ 'artist.list'|trans({}, 'AppBundle') }}</span>
-    </h1>
-
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th></th>
-            <th>
-                <form action="{{ path('artist_index') }}">
+    <form action="{{ path('artist_index') }}">
+        <h1>
+            <div class="pull-left">
+                <i class="material-icons" style="font-size:48px;">recent_actors</i>
+                <span>{{ 'artist.list'|trans({}, 'AppBundle') }}</span>
+            </div>
+            <div class="pull-right form-inline" style="font-size: 30px;">
+                <input type="text" class="form-inline" name="search" value="{{ search }}"/>
+                <button class="btn form-inline btn-white">
+                    <i class="material-icons" style="font-size:48px;">pageview</i>
+                </button>
+            </div>
+        </h1>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th></th>
+                <th>
                     {{ 'artist.form.name'|trans({}, 'AppBundle') }} / {{ 'artist.form.firstname'|trans({}, 'AppBundle') }} i {{ 'artist.form.lastname'|trans({}, 'AppBundle') }}
                     <button class="btn btn-default filter" type="submit" name="filter" value="name ASC,lastname ASC"><i class="material-icons" title="ASC">arrow_drop_up</i></button>
                     <button class="btn btn-default filter" type="submit" name="filter" value="name DESC,lastname DESC"><i class="material-icons" title="DESC">arrow_drop_down</i></button>
-                </form>
-            </th>
-            <th>
-                <form action="{{ path('artist_index') }}">
+                </th>
+                <th>
                     {{ 'artist.form.birthdate_person'|trans({}, 'AppBundle') }} / {{ 'artist.form.birthdate_band'|trans({}, 'AppBundle') }}
                     <button class="btn btn-default filter" type="submit" name="filter" value="birthDate ASC"><i class="material-icons" title="ASC">arrow_drop_up</i></button>
                     <button class="btn btn-default filter" type="submit" name="filter" value="birthDate DESC"><i class="material-icons" title="DESC">arrow_drop_down</i></button>
-                </form>
-            </th>
-            <th>
-                <form action="{{ path('artist_index') }}">
+                </th>
+                <th>
                     {{ 'artist.form.country'|trans({}, 'AppBundle') }}
                     <button class="btn btn-default filter" type="submit" name="filter" value="country ASC"><i class="material-icons" title="ASC">arrow_drop_up</i></button>
                     <button class="btn btn-default filter" type="submit" name="filter" value="country DESC"><i class="material-icons" title="DESC">arrow_drop_down</i></button>
-                </form>
-            </th>
-            <th>
-                {{ 'artist.form.actions'|trans({}, 'AppBundle') }}
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for artist in artists %}
-            <tr>
-                <td>
-                    {% if artist.band %}
-                        <i class="material-icons">people_outline</i>
-                    {% else %}
-                        <i class="material-icons">person_outline</i>
-                    {% endif %}
-                </td>
-                <td>
-                    {% if artist.name != null %}
-                        {{ artist.name }}
-                    {% else %}
-                        {{ artist.firstname }} {{ artist.lastname }}
-                    {% endif %}
-                    </td>
-                <td>
-                    {% if artist.band %}
-                        {{ artist.birthDate|date('Y') }}
-                    {% else %}
-                        {{ artist.birthDate|date('d-m-Y') }}
-                    {% endif %}
-                </td>
-                <td>{{ artist.country }}</td>
-                <td>
-                    <a href="{{ path('artist_show', { 'id': artist.id }) }}" class="btn btn-info" role="button">
-                        <i class="material-icons">info_outline</i>
-                        {{ 'buttons.show'|trans({}, 'AppBundle') }}
-                    </a>
-                    <a href="{{ path('artist_edit', { 'id': artist.id }) }}" class="btn btn-warning" role="button">
-                        <i class="material-icons">create</i>
-                        {{ 'buttons.edit'|trans({}, 'AppBundle') }}
-                    </a>
-                    <a href="{{ path('artist_delete', { 'id': artist.id }) }}" class="btn btn-danger" role="button">
-                        <i class="material-icons">highlight_off</i>
-                        {{ 'buttons.delete'|trans({}, 'AppBundle') }}
-                    </a>
-                </td>
+                </th>
+                <th>
+                    {{ 'artist.form.actions'|trans({}, 'AppBundle') }}
+                </th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for artist in artists %}
+                <tr>
+                    <td>
+                        {% if artist.band %}
+                            <i class="material-icons">people_outline</i>
+                        {% else %}
+                            <i class="material-icons">person_outline</i>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if artist.name != null %}
+                            {{ artist.name }}
+                        {% else %}
+                            {{ artist.firstname }} {{ artist.lastname }}
+                        {% endif %}
+                        </td>
+                    <td>
+                        {% if artist.band %}
+                            {{ artist.birthDate|date('Y') }}
+                        {% else %}
+                            {{ artist.birthDate|date('d-m-Y') }}
+                        {% endif %}
+                    </td>
+                    <td>{{ artist.country }}</td>
+                    <td>
+                        <a href="{{ path('artist_show', { 'id': artist.id }) }}" class="btn btn-info" role="button">
+                            <i class="material-icons">info_outline</i>
+                            {{ 'buttons.show'|trans({}, 'AppBundle') }}
+                        </a>
+                        <a href="{{ path('artist_edit', { 'id': artist.id }) }}" class="btn btn-warning" role="button">
+                            <i class="material-icons">create</i>
+                            {{ 'buttons.edit'|trans({}, 'AppBundle') }}
+                        </a>
+                        <a href="{{ path('artist_delete', { 'id': artist.id }) }}" class="btn btn-danger" role="button">
+                            <i class="material-icons">highlight_off</i>
+                            {{ 'buttons.delete'|trans({}, 'AppBundle') }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </form>
 
     <a href="{{ path('homepage') }}" class="btn btn-default" role="button" aria-label="Left Align">
         <i class="material-icons">undo</i>
